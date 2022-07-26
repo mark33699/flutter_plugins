@@ -23,7 +23,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.SnapshotReadyCallback;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.MapsInitializer.Renderer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.OnMapsSdkInitializedCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.LatLng;
@@ -89,6 +92,7 @@ final class GoogleMapController
       BinaryMessenger binaryMessenger,
       LifecycleProvider lifecycleProvider,
       GoogleMapOptions options) {
+    MapsInitializer.initialize(getApplicationContext(), Renderer.LATEST, this);
     this.id = id;
     this.context = context;
     this.options = options;
@@ -149,6 +153,18 @@ final class GoogleMapController
     updateInitialPolylines();
     updateInitialCircles();
     updateInitialTileOverlays();
+  }
+
+  @Override
+  public void onMapsSdkInitialized(MapsInitializer.Renderer renderer) {
+    switch (renderer) {
+      case LATEST:
+        Log.d("MapsDemo", "The latest✅✅✅ version of the renderer is used.");
+        break;
+      case LEGACY:
+        Log.d("MapsDemo", "The legacy❌❌❌ version of the renderer is used.");
+        break;
+    }
   }
 
   @Override
