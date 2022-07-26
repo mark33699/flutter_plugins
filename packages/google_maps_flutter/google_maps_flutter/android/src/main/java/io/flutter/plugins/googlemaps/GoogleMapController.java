@@ -54,6 +54,7 @@ final class GoogleMapController
         GoogleMapOptionsSink,
         MethodChannel.MethodCallHandler,
         OnMapReadyCallback,
+        OnMapsSdkInitializedCallback,
         GoogleMapListener,
         PlatformView {
 
@@ -92,7 +93,7 @@ final class GoogleMapController
       BinaryMessenger binaryMessenger,
       LifecycleProvider lifecycleProvider,
       GoogleMapOptions options) {
-    MapsInitializer.initialize(getApplicationContext(), Renderer.LATEST, this);
+    MapsInitializer.initialize(context, Renderer.LATEST, this);
     this.id = id;
     this.context = context;
     this.options = options;
